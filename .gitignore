@@ -1,0 +1,14 @@
+.coverage
+
+__pycache__/
+
+.cache/
+.direnv/
+.hypothesis/
+.idea/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.vscode/
+
+site

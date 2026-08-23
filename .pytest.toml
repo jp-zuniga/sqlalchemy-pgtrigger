@@ -1,0 +1,10 @@
+[pytest]
+  addopts = [
+    "--cov",
+    "--cov-report=term-missing",
+    "--quiet",
+  ]
+
+  console_output_style = "count"
+
+  pythonpath = ["pgtrigger"]

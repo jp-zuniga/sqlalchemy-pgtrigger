@@ -1,0 +1,56 @@
+[[repos]]
+  repo = "builtin"
+
+  [[repos.hooks]]
+    id = "check-added-large-files"
+
+  [[repos.hooks]]
+    id = "check-case-conflict"
+
+  [[repos.hooks]]
+    id = "check-illegal-windows-names"
+
+  [[repos.hooks]]
+    id = "check-merge-conflict"
+
+  [[repos.hooks]]
+    id = "check-json"
+
+  [[repos.hooks]]
+    id = "check-toml"
+
+  [[repos.hooks]]
+    id = "check-yaml"
+
+  [[repos.hooks]]
+    id = "detect-private-key"
+
+  [[repos.hooks]]
+    id = "end-of-file-fixer"
+
+  [[repos.hooks]]
+    args = ["--fix", "lf"]
+    id   = "mixed-line-ending"
+
+  [[repos.hooks]]
+    args = ["--branch", "production"]
+    id   = "no-commit-to-branch"
+
+  [[repos.hooks]]
+    args = ["--autofix"]
+    id   = "pretty-format-json"
+
+  [[repos.hooks]]
+    id = "trailing-whitespace"
+
+[[repos]]
+  repo = "local"
+
+  [[repos.hooks]]
+    entry          = "just pre-commit"
+    files.glob     = "src/**/*.py"
+    id             = "pre-commit"
+    language       = "system"
+    name           = "pre-commit"
+    pass_filenames = false
+    priority       = 100

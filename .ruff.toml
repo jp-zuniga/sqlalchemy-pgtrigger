@@ -1,0 +1,38 @@
+line-length = 88
+
+preview = true
+
+src = ["pgtrigger"]
+
+[lint]
+  extend-safe-fixes = ["TC"]
+
+  select = ["ALL"]
+
+  ignore = [
+    "blank-line-after-function",
+    "f-string-in-exception",
+    "incorrect-blank-line-before-class",
+    "missing-copyright-notice",
+    "missing-trailing-comma",
+    "multi-line-summary-first-line",
+    "raise-vanilla-args",
+    "raw-string-in-exception",
+    "unnecessary-multiline-docstring",
+  ]
+
+  [lint.isort]
+    case-sensitive         = true
+    combine-as-imports     = true
+    force-wrap-aliases     = true
+    forced-separate        = ["typing_extensions", "ty_extensions"]
+    lines-between-types    = 1
+    order-by-type          = true
+    relative-imports-order = "closest-to-furthest"
+
+  [lint.per-file-ignores]
+    "tests/**" = [
+      "D",
+      "assert",
+      "suspicious-non-cryptographic-random-usage",
+    ]

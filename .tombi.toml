@@ -1,0 +1,8 @@
+toml-version = "v1.1.0"
+
+[format.rules]
+  indent-sub-tables               = true
+  indent-table-key-value-pairs    = true
+  key-value-equals-sign-alignment = true
+  line-width                      = 88
+  trailing-comment-alignment      = true
