@@ -185,7 +185,7 @@ class Upsert(Statement):
         function of fields that are already set.
         """
 
-        setattr(self, name, value)
+        object.__setattr__(self, name, value)  # ruff: ignore[unnecessary-dunder-call]
 
     def _render_function(self) -> str:
         """
