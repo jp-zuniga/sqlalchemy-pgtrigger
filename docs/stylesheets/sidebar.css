@@ -1,0 +1,78 @@
+.md-content {
+  contain: paint;
+}
+
+.md-sidebar {
+  transition:
+    width 0.2s cubic-bezier(0.4, 0, 0.1, 1),
+    min-width 0.2s cubic-bezier(0.4, 0, 0.1, 1),
+    opacity 0.5s ease-in-out 0.1s !important;
+}
+
+.md-typeset img,
+.md-typeset svg {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout style;
+}
+
+.zen-icon {
+  position: absolute;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.1, 1),
+    opacity 0.2s ease-in-out;
+}
+
+.zen-mode-toggle {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 24pt;
+  height: 24pt;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease-in-out;
+}
+
+.zen-mode-toggle:hover {
+  transform: scale(1.25);
+}
+
+@media screen and (max-width: 1220px) {
+  .zen-mode-toggle {
+    display: none !important;
+  }
+}
+
+body[data-zen-mode="false"] .icon-collapse {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-zen-mode="false"] .icon-expand {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+body[data-zen-mode="true"] .icon-collapse {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+body[data-zen-mode="true"] .icon-expand {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+body[data-zen-mode="true"] .md-sidebar {
+  width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease-in-out,
+    width 0.2s cubic-bezier(0.4, 0, 0.1, 1) 0.1s,
+    min-width 0.2s cubic-bezier(0.4, 0, 0.1, 1) 0.1s !important;
+}

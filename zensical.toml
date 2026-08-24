@@ -1,0 +1,154 @@
+[project]
+  copyright = "&copy 2026, Joaquín Zúñiga"
+
+  edit_uri = "edit/main/docs"
+
+  extra_css = [
+    "stylesheets/footer.css",
+    "stylesheets/theme.css",
+    "stylesheets/sidebar.css",
+    "stylesheets/width.css",
+  ]
+
+  extra_javascript = [
+    "scripts/sidebar.js",
+  ]
+
+  site_author      = "Joaquín Zúñiga <jp.zuniga.dev@gmail.com>"
+  site_description = "sqlalchemy rewrite of django-pgtrigger"
+  site_name        = "sqlalchemy-pgtrigger"
+
+  repo_name = "jp-zuniga/sqlalchemy-pgtrigger"
+  repo_url  = "https://github.com/jp-zuniga/sqlalchemy-pgtrigger"
+
+  nav = [
+    { "Home" = "index.md" },
+    {
+      "API Reference" = [
+        "reference/index.md",
+        "reference/config.md",
+        "reference/enums.md",
+        "reference/consts.md",
+        "reference/aliases.md",
+        "reference/core.md",
+        "reference/contrib.md",
+        "reference/ddl.md",
+        "reference/compiler.md",
+        "reference/registry.md",
+        "reference/installation.md",
+        "reference/migrations.md",
+        "reference/runtime.md",
+        "reference/aio.md",
+        "reference/utils.md",
+      ]
+    },
+  ]
+
+  [project.markdown_extensions]
+    abbr       = {}
+    admonition = {}
+    attr_list  = {}
+    def_list   = {}
+    md_in_html = {}
+    tables     = {}
+
+    toc = {
+      permalink = true,
+      toc_depth = 3,
+    }
+
+    [project.markdown_extensions.pymdownx]
+      caret     = {}
+      details   = {}
+      emoji     = {}
+      highlight = {}
+      keys      = {}
+      mark      = {}
+      tilde     = {}
+
+      blocks.caption = {}
+
+      tasklist.custom_checkbox = true
+
+      snippets.auto_append = [
+        "docs/snippets/abbrs.md",
+        "docs/snippets/links.md",
+      ]
+
+      superfences.custom_fences = [
+        {
+          name   = "mermaid",
+          class  = "mermaid",
+          format = "pymdownx.superfences.fence_code_format",
+        },
+      ]
+
+      [project.markdown_extensions.pymdownx.tabbed]
+        alternate_style = true
+
+        slugify = {
+          kwds.case = "lower",
+          object    = "pymdownx.slugs.slugify",
+        }
+
+    [project.markdown_extensions.zensical.extensions]
+      preview.configurations = [{ targets = { include = ["**/*.md"] } }]
+
+  [project.plugins.mkdocstrings.handlers.python]
+    paths = ["pgtrigger"]
+
+    [project.plugins.mkdocstrings.handlers.python.options]
+      docstring_style             = "google"
+      inherited_members           = true
+      line_length                 = 88
+      heading_level               = 2
+      modernize_annotations       = true
+      separate_signature          = true
+      show_root_heading           = true
+      show_root_full_path         = true
+      show_root_members_full_path = true
+      show_signature_annotations  = true
+      show_source                 = true
+      show_symbol_type_heading    = true
+      show_symbol_type_toc        = true
+      signature_crossrefs         = true
+
+  [project.theme]
+    features = [
+      "content.code.copy",
+      "content.tooltips",
+      "navigation.footer",
+      "navigation.indexes",
+      "navigation.instant",
+      "navigation.instant.prefetch",
+      "navigation.instant.progress",
+      "navigation.path",
+      "navigation.pruning",
+      "navigation.top",
+    ]
+
+    favicon = "logo.svg"
+    logo    = "logo.svg"
+    variant = "modern"
+
+    [[project.theme.palette]]
+      media       = "(prefers-color-scheme: light)"
+      scheme      = "default"
+      toggle.icon = "lucide/sun"
+      toggle.name = "Toggle dark mode"
+
+    [[project.theme.palette]]
+      media       = "(prefers-color-scheme: dark)"
+      scheme      = "slate"
+      toggle.icon = "lucide/moon"
+      toggle.name = "Toggle light mode"
+
+  [project.validation]
+    invalid_link_anchors  = true
+    invalid_links         = true
+    shadowed_definitions  = true
+    shadowed_footnotes    = true
+    unresolved_footnotes  = true
+    unresolved_references = false
+    unused_definitions    = false
+    unused_footnotes      = true
