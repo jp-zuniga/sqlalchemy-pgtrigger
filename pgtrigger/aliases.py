@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping
     from types import SimpleNamespace
 
-    from sqlalchemy import ColumnElement, Connection, Table
+    from sqlalchemy import ColumnElement, Connection, Engine, Table
     from sqlalchemy.orm import Session
 
     from pgtrigger.core import Event, Events, ForEach, Func, RowProxy, UpdateOf
@@ -41,6 +41,14 @@ What a soft-deleted row's marker column is set to.
 """
 
 ########################################################################################
+
+type Connectable = Connection | Engine | Session
+"""
+Anything that can run trigger DDL.
+
+An `Engine` is given a transaction of its own;
+a `Connection` or `Session` joins the one already open.
+"""
 
 type Executor = Connection | Session
 """
