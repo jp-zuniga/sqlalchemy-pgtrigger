@@ -55,4 +55,4 @@
 [tool.uv.build-backend]
   module-name   = "pgtrigger"
   module-root   = ""
-  wheel-exclude = ["docs", ".github", "tests"]
+  wheel-exclude = [".github", "docs", "tests"]
