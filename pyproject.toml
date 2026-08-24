@@ -50,3 +50,8 @@
   ]
 
   build-backend = "uv_build"
+
+[tool.uv.build-backend]
+  module-name   = "pgtrigger"
+  module-root   = ""
+  wheel-exclude = ["docs", ".github", "tests"]

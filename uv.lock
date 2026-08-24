@@ -665,7 +665,7 @@ postgresql-psycopgbinary = [
 [[package]]
 name = "sqlalchemy-pgtrigger"
 version = "0.0.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "sqlalchemy", extra = ["asyncio", "postgresql-psycopgbinary"] },
 ]
