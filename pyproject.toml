@@ -1,6 +1,6 @@
 [project]
   name            = "sqlalchemy-pgtrigger"
-  version         = "0.0.0"
+  version         = "0.0.0a1"
   description     = "sqlalchemy rewrite of django-pgtrigger"
   readme          = "readme.md"
   requires-python = ">=3.14"
