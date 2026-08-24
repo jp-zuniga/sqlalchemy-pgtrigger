@@ -29,6 +29,7 @@
 [dependency-groups]
   dev = [
     "alembic>=1.19.1",
+    "hypothesis>=6.165.10",
     "mkdocstrings-python>=2.0.7",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
@@ -37,4 +38,4 @@
     "tombi>=1.4.1",
     "ty>=0.0.73",
     "zensical>=0.0.57",
-]
+  ]
