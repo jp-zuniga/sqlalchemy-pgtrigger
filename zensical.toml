@@ -3,16 +3,7 @@
 
   edit_uri = "edit/main/docs"
 
-  extra_css = [
-    "stylesheets/footer.css",
-    "stylesheets/theme.css",
-    "stylesheets/sidebar.css",
-    "stylesheets/width.css",
-  ]
-
-  extra_javascript = [
-    "scripts/sidebar.js",
-  ]
+  extra_css = ["stylesheets/theme.css"]
 
   site_author      = "Joaquín Zúñiga <jp.zuniga.dev@gmail.com>"
   site_description = "sqlalchemy rewrite of django-pgtrigger"
@@ -44,6 +35,10 @@
     },
   ]
 
+  [[project.extra.social]]
+    icon = "fontawesome/brands/github"
+    link = "https://github.com/jp-zuniga/sqlalchemy-pgtrigger"
+
   [project.markdown_extensions]
     abbr       = {}
     admonition = {}
@@ -70,10 +65,7 @@
 
       tasklist.custom_checkbox = true
 
-      snippets.auto_append = [
-        "docs/snippets/abbrs.md",
-        "docs/snippets/links.md",
-      ]
+      snippets.auto_append = ["docs/snippets/links.md"]
 
       superfences.custom_fences = [
         {
@@ -115,6 +107,8 @@
 
   [project.theme]
     features = [
+      "content.action.edit",
+      "content.action.view",
       "content.code.copy",
       "content.tooltips",
       "navigation.footer",

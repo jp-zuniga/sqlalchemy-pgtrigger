@@ -6,6 +6,10 @@
   --md-typeset-code-color: var(--md-accent-fg-color);
 }
 
+.md-footer-meta {
+  background-color: var(--md-default-bg-color);
+}
+
 .md-nav__link:hover code,
 .md-nav__link--active code {
   color: var(--md-accent-fg-color);
