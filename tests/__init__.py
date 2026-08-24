@@ -1,0 +1,3 @@
+"""
+sqlalchemy-pgtrigger unit tests.
+"""
