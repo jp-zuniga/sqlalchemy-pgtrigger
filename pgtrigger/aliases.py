@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from types import SimpleNamespace
 
     from sqlalchemy import ColumnElement, Connection, Engine, Table
+    from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession
     from sqlalchemy.orm import Session
 
     from pgtrigger.core import Event, Events, ForEach, Func, RowProxy, UpdateOf
@@ -57,4 +58,16 @@ Something bound to a single connection.
 Run-time state such as the ignore parameter is transaction-local, so it has to
 be set on the connection that will run the statements. An `Engine` hands out a
 different connection per statement and is refused.
+"""
+
+########################################################################################
+
+type AsyncConnectable = AsyncEngine | AsyncConnection | AsyncSession
+"""
+The async counterpart of `Connectable`.
+"""
+
+type AsyncExecutor = AsyncConnection | AsyncSession
+"""
+The async counterpart of `Executor`.
 """
