@@ -3,7 +3,7 @@ Getting trigger SQL into the database.
 
 Two things make this less trivial than it looks.
 
-### Percent signs
+## Percent signs
 
 Trigger bodies contain `%`, from `RAISE EXCEPTION '... %'`.
 SQLAlchemy executes DDL with an empty parameter mapping rather than no parameters,
@@ -13,7 +13,7 @@ Stock `sqlalchemy.schema.DDL` avoids this by routing its text through the compil
 paramstyles and leaves them alone otherwise. `RawSQL` does the same,
 so it inherits the behaviour rather than guessing at it.
 
-### Multiple statements
+## Multiple statements
 
 Installing a trigger means creating a function, recreating the trigger,
 and commenting on it. Drivers using the extended query protocol reject more

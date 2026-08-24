@@ -110,7 +110,7 @@ class Trigger(SchemaItem):
     and `configure`; each receives the table, so a derived trigger can inspect
     columns it was not told about.
 
-    ## Statement-level triggers
+    # Statement-level triggers
 
     Set `for_each=ForEach.STATEMENT` and the trigger fires once per statement
     rather than once per row, which is more efficient when a bulk `UPDATE`
