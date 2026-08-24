@@ -29,4 +29,4 @@ jobs:
       - name: Create release and upload assets
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} dist/* --generate-notes --pre-release
+        run: gh release create ${{ github.ref_name }} dist/* --generate-notes --prerelease
