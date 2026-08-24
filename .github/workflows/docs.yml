@@ -1,0 +1,46 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "zensical.toml"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: false
+  group: pages
+
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+
+      - run: uv run --frozen zensical build --clean
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      - uses: actions/deploy-pages@v5
+        id: deployment

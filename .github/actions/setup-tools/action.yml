@@ -1,0 +1,30 @@
+name: "setup-tools"
+
+inputs:
+  sync_args:
+    default: "--frozen"
+    description: "uv sync args"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: install uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+        ignore-nothing-to-cache: true
+        version: "0.12.1"
+
+    - name: sync environment
+      if: inputs.sync_args != ''
+      shell: bash
+      run: uv sync ${{ inputs.sync_args }}
+
+    - name: configure astral env output
+      shell: bash
+      run: |
+        {
+          echo "RUFF_OUTPUT_FORMAT=github"
+          echo "TY_OUTPUT_FORMAT=github"
+        } >> "$GITHUB_ENV"

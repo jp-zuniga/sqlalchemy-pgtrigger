@@ -1,0 +1,52 @@
+name: lint
+
+on:
+  push:
+    branches-ignore:
+      - "chore/deps"
+      - "dependabot/**"
+    paths: &lint-paths
+      - "**.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".python-version"
+      - ".ruff.toml"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/lint.yml"
+  pull_request:
+    paths: *lint-paths
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: ${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+
+permissions:
+  contents: read
+
+jobs:
+  full-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+
+      - name: ty check
+        run: uv run --frozen ty check
+
+      - name: ruff check
+        run: uv run --frozen ruff check --unsafe-fixes
+
+      - name: ruff format
+        run: uv run --frozen ruff format --check
+
+      - name: tombi lint
+        run: uv run --frozen tombi lint --error-on-warnings
+
+      - name: tombi format
+        run: uv run --frozen tombi format --check

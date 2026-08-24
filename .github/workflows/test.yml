@@ -1,0 +1,41 @@
+name: test
+
+on:
+  push:
+    branches-ignore:
+      - "chore/deps"
+      - "dependabot/**"
+    paths: &test-paths
+      - "**.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".coveragerc.toml"
+      - ".pytest.toml"
+      - ".python-version"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/test.yml"
+  pull_request:
+    paths: *test-paths
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: ${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+
+      - name: run tests
+        run: uv run --frozen pytest --maxfail 1
