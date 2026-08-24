@@ -25,14 +25,17 @@ src = ["pgtrigger"]
     case-sensitive         = true
     combine-as-imports     = true
     force-wrap-aliases     = true
-    forced-separate        = ["typing_extensions", "ty_extensions"]
     lines-between-types    = 1
     order-by-type          = true
     relative-imports-order = "closest-to-furthest"
+
+    forced-separate   = ["typing_extensions", "ty_extensions"]
+    known-first-party = ["pgtrigger"]
 
   [lint.per-file-ignores]
     "tests/**" = [
       "D",
       "assert",
+      "no-self-use",
       "suspicious-non-cryptographic-random-usage",
     ]
