@@ -48,7 +48,7 @@
 
   [[repos.hooks]]
     entry          = "just pre-commit"
-    files.glob     = "src/**/*.py"
+    files.glob     = "**.py"
     id             = "pre-commit"
     language       = "system"
     name           = "pre-commit"
