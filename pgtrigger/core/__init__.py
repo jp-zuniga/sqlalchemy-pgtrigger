@@ -13,6 +13,7 @@ from .conditions import SQL, Composite, Condition, Not, Q
 from .func import Func
 from .providers import Clause, Renderable, Statement
 from .proxy import RowProxy, RowScope, new, old
+from .trigger import Trigger, TriggerKwargs
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -38,6 +39,8 @@ __all__: Final[Sequence[str]] = (
     "RowScope",
     "Statement",
     "Time",
+    "Trigger",
+    "TriggerKwargs",
     "UpdateOf",
     "new",
     "old",
