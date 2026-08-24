@@ -30,7 +30,8 @@ class TestBind:
         ],
     )
     def test_rejects_what_cannot_run_sql(self, value: object) -> None:
-        with pytest.raises(TypeError, match="Expected an Engine") and bind(value):  # ty: ignore[invalid-argument-type]
+        # ty: ignore[invalid-argument-type]
+        with pytest.raises(TypeError, match="Expected an Engine"), bind(value):
             pass
 
     def test_accepts_anything_with_execute(self) -> None:

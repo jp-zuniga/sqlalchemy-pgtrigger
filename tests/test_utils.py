@@ -135,7 +135,7 @@ class TestDedentSql:
 
 class TestSplitStatements:
     @pytest.mark.parametrize(
-        ("script", "expected"),
+        ("expected", "script"),
         [
             ([], ""),
             ([], ";;;"),

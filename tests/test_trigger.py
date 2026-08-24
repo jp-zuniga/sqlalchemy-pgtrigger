@@ -256,7 +256,7 @@ class TestValidation:
             minimal(time=Time.INSTEAD_OF, condition=SQL("x"))
 
     @pytest.mark.parametrize(
-        ("field", "value", "expected"),
+        ("expected", "field", "value"),
         [
             (TypeError, "time", "BEFORE"),
             (TypeError, "for_each", "ROW"),
@@ -293,6 +293,7 @@ class TestReferencingDerivation:
     ) -> None:
         trigger = minimal(time=Time.AFTER, events=event, for_each=ForEach.STATEMENT)
 
+        assert trigger.referencing is not None
         assert bool(trigger.referencing.old) is has_old
         assert bool(trigger.referencing.new) is has_new
 

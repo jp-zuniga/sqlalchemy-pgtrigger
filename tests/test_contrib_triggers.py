@@ -80,6 +80,7 @@ class TestProtect:
         trigger = Protect(
             name="p",
             events=Event.DELETE,
+            # ruff: ignore[unused-lambda-argument]
             condition=lambda old, new: old.status == "shipped",
         )
 
@@ -126,6 +127,7 @@ class TestReadOnly:
         trigger = ReadOnly(
             name="r",
             fields=["total"],
+            # ruff: ignore[unused-lambda-argument]
             condition=lambda old, new: old.status == "shipped",
         )
         sql = trigger.compile(orders).install_sql

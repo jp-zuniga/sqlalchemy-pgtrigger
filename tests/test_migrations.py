@@ -150,8 +150,10 @@ class TestReverse:
 
     def test_drop_with_capture_restores(self) -> None:
         op = DropPGTriggerOp(pgid="p", table="orders", reverse_sql="B;")
+        reversed_op = op.reverse()
 
-        assert op.reverse().sql == "B;"
+        assert isinstance(reversed_op, RunPGSQLOp)
+        assert reversed_op.sql == "B;"
 
     def test_drop_without_capture_says_why_it_cannot(self) -> None:
         with pytest.raises(NotImplementedError, match="no reverse SQL was captured"):
@@ -162,7 +164,10 @@ class TestReverse:
             RunPGSQLOp(sql="A;").reverse()
 
     def test_run_reverses_to_its_reverse(self) -> None:
-        assert RunPGSQLOp(sql="A;", reverse_sql="B;").reverse().sql == "B;"
+        reversed_op = RunPGSQLOp(sql="A;", reverse_sql="B;").reverse()
+
+        assert isinstance(reversed_op, RunPGSQLOp)
+        assert reversed_op.sql == "B;"
 
 
 ########################################################################################
