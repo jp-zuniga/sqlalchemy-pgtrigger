@@ -4,6 +4,7 @@ Marking a row instead of removing it.
 
 from typing import TYPE_CHECKING, final, override
 
+from pgtrigger.consts import UNSET
 from pgtrigger.core import Event, Time, Trigger
 from pgtrigger.utils import (
     dedent_sql,
@@ -22,8 +23,7 @@ if TYPE_CHECKING:
     from sqlalchemy import Table
 
     from pgtrigger.aliases import SoftDeleteValue
-    from pgtrigger.core import TriggerKwargs
-
+    from pgtrigger.core.trigger import TriggerKwargs
 
 ########################################################################################
 
@@ -34,7 +34,7 @@ class SoftDelete(Trigger):
     Marks a row instead of removing it.
 
     ```python
-    pgtrigger.SoftDelete(field="is_active", name="soft_delete")
+    pgtrigger.SoftDelete(name="soft_delete", field="is_active")
     ```
 
     The `DELETE` still appears to succeed, so an ORM that issues one,
@@ -50,12 +50,12 @@ class SoftDelete(Trigger):
     Supports nullable boolean, string, and integer columns, and composite primary keys.
     """
 
-    field: str
+    field: str | None = None
     """
     Column marking the row as deleted. Required.
     """
 
-    value: SoftDeleteValue
+    value: SoftDeleteValue = False
     """
     What to set it to.
     """
@@ -64,7 +64,7 @@ class SoftDelete(Trigger):
         self,
         *,
         field: str | None = None,
-        value: Sentinel | SoftDeleteValue = False,
+        value: Sentinel | SoftDeleteValue = UNSET,
         **kwargs: Unpack[TriggerKwargs],
     ) -> None:
         """

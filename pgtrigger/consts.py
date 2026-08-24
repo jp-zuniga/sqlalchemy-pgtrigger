@@ -15,6 +15,7 @@ from typing_extensions import Sentinel
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from logging import Logger
+    from re import Pattern
     from typing import Final
 
     from sqlalchemy import TextClause
@@ -33,7 +34,7 @@ DIGEST_LENGTH: Final[int] = 5
 Characters of the table digest appended to a trigger's PostgreSQL identifier.
 """
 
-DOLLAR_TAG_PATTERN: Final[re.Pattern] = re.compile(r"\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$")
+DOLLAR_TAG_PATTERN: Final[Pattern] = re.compile(r"\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$")
 """
 Opening or closing tag of a dollar-quoted string.
 """
@@ -76,7 +77,7 @@ MAX_PGID_LENGTH: Final[int] = 63
 Longest PostgreSQL identifier.
 """
 
-NAME_PATTERN: Final[re.Pattern] = re.compile(r"^[A-Za-z0-9_-]+$")
+NAME_PATTERN: Final[Pattern] = re.compile(r"\A[A-Za-z0-9_-]+\Z")
 """
 Characters permitted in a trigger name.
 
@@ -160,9 +161,9 @@ SELECT
     n.nspname,
     c.relname,
     t.tgname,
-    obj_description(t.oid, 'pgtrigger'),
+    obj_description(t.oid, 'pg_trigger'),
     t.tgenabled
-FROM pgtrigger AS t
+FROM pg_trigger AS t
     JOIN pg_class AS c ON c.oid = t.tgrelid
     JOIN pg_namespace AS n ON n.oid = c.relnamespace
 WHERE left(t.tgname, {len(PGID_PREFIX)}) = '{PGID_PREFIX}'
@@ -185,10 +186,10 @@ SELECT
     n.nspname,
     c.relname,
     t.tgname,
-    obj_description(t.oid, 'pgtrigger'),
+    obj_description(t.oid, 'pg_trigger'),
     pg_get_functiondef(t.tgfoid),
     pg_get_triggerdef(t.oid)
-FROM pgtrigger AS t
+FROM pg_trigger AS t
     JOIN pg_class AS c ON c.oid = t.tgrelid
     JOIN pg_namespace AS n ON n.oid = c.relnamespace
 WHERE left(t.tgname, {len(PGID_PREFIX)}) = '{PGID_PREFIX}'

@@ -2,15 +2,26 @@
 Writing operations out into a revision file.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from alembic.autogenerate import renderers
 
 from .operations import CreatePGTriggerOp, DropPGTriggerOp, RunPGSQLOp
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from alembic.autogenerate.api import AutogenContext
 
+########################################################################################
+
+UNQUOTABLE: Final[Sequence[str]] = ('"""', "\\", "\r", "\x00")
+"""
+Substrings that a triple-quoted literal cannot carry back out unchanged.
+
+`\r` is normalised to `\n` by the tokenizer and a NUL byte makes the source
+unparseable, so SQL containing either falls back to `repr`.
+"""
 
 ########################################################################################
 
@@ -30,14 +41,14 @@ def render_sql(sql: str) -> str:
     would put whitespace into the statement that runs.
 
     Falls back to `repr` when the SQL contains anything that would break the
-    quoting.
+    quoting, or would not survive the tokenizer.
 
     Returns:
         str: A Python expression evaluating to `sql`.
 
     """
 
-    if '"""' in sql or "\\" in sql or sql.endswith('"'):
+    if any(unsafe in sql for unsafe in UNQUOTABLE) or sql.endswith('"'):
         return repr(sql)
 
     return f'"""\\\n{sql}"""'
@@ -115,7 +126,10 @@ def render_run_pgsql(
 
     """
 
-    lines = ["op.run_pg_sql(", f"        sql={render_sql(op.sql)},"]
+    lines = [
+        "op.run_pgsql(",
+        f"        sql={render_sql(op.sql)},",
+    ]
 
     if op.reverse_sql:
         lines.append(f"        reverse_sql={render_sql(op.reverse_sql)},")

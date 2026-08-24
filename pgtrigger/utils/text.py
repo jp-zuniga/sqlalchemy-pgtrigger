@@ -5,20 +5,22 @@ Naming and fingerprinting.
 from hashlib import sha256
 from typing import TYPE_CHECKING
 
-from pgtrigger.consts import DIGEST_LENGTH
-
 if TYPE_CHECKING:
     from sqlalchemy import Table
 
 ########################################################################################
 
 
-def hex_digest(*, length: int = DIGEST_LENGTH, value: str) -> str:
+def hex_digest(*, length: int | None = None, value: str) -> str:
     """
     Fingerprint a string.
 
     Used to spot drift between a declaration and what is installed, and to give
     each trigger a table-specific suffix. Not a security boundary.
+
+    Defaults to the whole digest. Truncation is for the identifier suffix, where
+    63 characters have to cover the prefix and the trigger name as well; a
+    shortened fingerprint would let a changed trigger read as unchanged.
 
     Returns:
         str: A hex digest, truncated to `length` when one is given.

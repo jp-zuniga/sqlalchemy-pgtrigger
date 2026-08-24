@@ -14,6 +14,7 @@ import pgtrigger.registry
 from pgtrigger.compiler import CompiledTrigger, Upsert
 from pgtrigger.config import CONFIG
 from pgtrigger.consts import (
+    DIGEST_LENGTH,
     MAX_NAME_LENGTH,
     MAX_PGID_LENGTH,
     NAME_PATTERN,
@@ -566,7 +567,7 @@ class Trigger(SchemaItem):
 
         """
 
-        suffix = hex_digest(value=self.uri(table))
+        suffix = hex_digest(length=DIGEST_LENGTH, value=self.uri(table))
 
         pgid = f"{PGID_PREFIX}{self.name}_{suffix}".lower()
 
