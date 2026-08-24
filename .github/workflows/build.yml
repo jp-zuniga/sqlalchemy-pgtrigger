@@ -1,0 +1,33 @@
+name: build
+
+on:
+  push:
+    branches-ignore:
+      - "chore/deps"
+      - "dependabot/**"
+    paths: &build-paths
+      - "**.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/build.yml"
+  pull_request:
+    paths: *build-paths
+  workflow_dispatch:
+
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+        with:
+          sync_args: ""
+
+      - name: build distributions
+        run: uv build

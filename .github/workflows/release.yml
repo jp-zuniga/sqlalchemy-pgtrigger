@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  source-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+        with:
+          sync_args: ""
+
+      - name: build distributions
+        run: uv build
+
+      - name: Create release and upload assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ github.ref_name }} dist/* --generate-notes --pre-release
