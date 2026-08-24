@@ -1,0 +1,31 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  pypi-publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+        with:
+          sync_args: ""
+
+      - name: build distributions
+        run: uv build
+
+      - name: publish to pypi
+        run: uv publish
