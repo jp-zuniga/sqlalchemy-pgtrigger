@@ -2,7 +2,7 @@
   name            = "sqlalchemy-pgtrigger"
   version         = "0.0.0"
   description     = "sqlalchemy rewrite of django-pgtrigger"
-  readme.file     = "readme.md"
+  readme          = "readme.md"
   requires-python = ">=3.14"
   license         = "BSD-3-Clause"
   license-files   = ["license.md"]
@@ -23,6 +23,10 @@
     "sqlalchemy[asyncio,postgresql-psycopgbinary]>=2.0.52",
   ]
 
+  [project.urls]
+    Homepage = "https://github.com/jp-zuniga/sqlalchemy-pgtrigger"
+    Issues   = "https://github.com/jp-zuniga/sqlalchemy-pgtrigger/issues"
+
   [project.optional-dependencies]
     alembic = ["alembic>=1.19.1"]
 
@@ -39,3 +43,10 @@
     "ty>=0.0.73",
     "zensical>=0.0.57",
   ]
+
+[build-system]
+  requires = [
+    "uv_build>=0.11.20,<0.13.0",
+  ]
+
+  build-backend = "uv_build"
