@@ -13,7 +13,6 @@ if TYPE_CHECKING:
 
     from pgtrigger.core import Event, Events, ForEach, Func, RowProxy, UpdateOf
 
-
 ########################################################################################
 
 type EventClause = Event | Events | UpdateOf
