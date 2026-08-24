@@ -8,8 +8,7 @@
 uv add sqlalchemy-pgtrigger
 ```
 
-Needs Python 3.14+, SQLAlchemy 2.0.52+, and PostgreSQL 13+.
-Alembic is optional and only needed if you want triggers in migrations:
+Alembic integration is optional, allowing trigger installation through migrations:
 
 ```sh
 uv add sqlalchemy-pgtrigger[alembic]
@@ -17,8 +16,8 @@ uv add sqlalchemy-pgtrigger[alembic]
 
 ## Declaring a trigger
 
-Triggers are `SchemaItem`s, so they go in `__table_args__` next to indices and
-constraints. The vocabulary follows the `CREATE TRIGGER` grammar, so a declaration
+Triggers inherit from `SchemaItem`, so they can go in `__table_args__` next to indices
+and constraints. The vocabulary follows the `CREATE TRIGGER` grammar, so a declaration
 and the statement it produces line up clause for clause.
 
 ```python
@@ -64,9 +63,7 @@ usually what you want in tests:
 Document.metadata.create_all(engine)
 ```
 
-Everywhere else, say so explicitly. Every function takes the connectable first;
-an `Engine` gets a transaction of its own,
-a `Connection` or `Session` joins the one already open:
+Everywhere else, triggers must be installed explicitly:
 
 ```python
 from pgtrigger.installation import install, status, uninstall
@@ -76,6 +73,10 @@ install(engine, "documents:mark_deleted")  # one trigger
 install(session, "documents:*")  # one table
 status(engine)  # declared vs installed
 ```
+
+Every function takes the connectable first;
+an `Engine` gets a transaction of its own,
+a `Connection` or `Session` joins one already open.
 
 To keep triggers in migrations instead,
 import the Alembic integration from your `env.py`,
