@@ -7,7 +7,10 @@ on:
   workflow_dispatch:
 
 permissions:
+  artifact-metadata: write
+  attestations: write
   contents: write
+  id-token: write
 
 jobs:
   source-release:
@@ -26,7 +29,12 @@ jobs:
       - name: build distributions
         run: uv build
 
-      - name: Create release and upload assets
+      - name: generate artifact attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: dist/*
+
+      - name: create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} dist/* --generate-notes --prerelease
+        run: gh release create ${{ github.ref_name }} dist/*
